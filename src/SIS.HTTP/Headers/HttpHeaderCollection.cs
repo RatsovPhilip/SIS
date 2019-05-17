@@ -1,36 +1,39 @@
-﻿using SIS.HTTP.Headers.Contracts;
+﻿using SIS.HTTP.Common;
+using SIS.HTTP.Headers.Contracts;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SIS.HTTP.Headers
 {
     public class HttpHeaderCollection : IHttpHeaderCollection
     {
-        private readonly Dictionary<string, HttpHeader> heders;
+        private readonly Dictionary<string, HttpHeader> httpHeaders;
 
         public HttpHeaderCollection()
         {
-            this.heders = new Dictionary<string, HttpHeader>();
+            this.httpHeaders = new Dictionary<string, HttpHeader>();
         }
 
         public void Addheader(HttpHeader header)
         {
-            string key = header.Key;
-            string value = header.Value;
+            CoreValidator.ThrowIfNull(header, nameof(header));
+            this.httpHeaders.Add(header.Key, header);
 
-            if (this.heders.ContainsKey(key) == false)
-            {
-                this.heders.Add(key, new HttpHeader(key, value));
-            }
         }
 
         public bool ContainsHeader(string key)
         {
-            throw new System.NotImplementedException();
+            CoreValidator.ThrowIfNullOrEmty(key, nameof(key));
+            return this.httpHeaders.ContainsKey(key);
         }
 
         public HttpHeader GetHeader(string key)
         {
-            throw new System.NotImplementedException();
+            CoreValidator.ThrowIfNullOrEmty(key, nameof(key));
+            return this.httpHeaders[key];
         }
+
+        public override string ToString() => string.Join("\r\n", this.httpHeaders.Values.Select(header => header.ToString()));
+
     }
 }
