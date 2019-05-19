@@ -6,7 +6,9 @@
 
         public const string HostHeaderKey = "Host";
 
-        public const string HttpNewLine = "/r/n";
+        public const string HttpNewLine = "\r\n";
+
+        public const string NotValidRequestMethodErrorMessage = "The HTTP method - {0} is not supported";
 
     }
 }
