@@ -103,8 +103,8 @@
 
         private async Task PrepareResponse(IHttpResponse httpResponse)
         {
-            byte[] byteSegments = httpResponse.GetBytes();
-            this.client.Send(byteSegments, SocketFlags.None);
+            var byteSegments = new ArraySegment<byte>(httpResponse.GetBytes());
+            await this.client.SendAsync(byteSegments, SocketFlags.None);
         }
 
     }

@@ -46,7 +46,7 @@
         public async Task Listen(Socket client)
         {
             var connectionHandler = new ConnectionHandler(client, this.serverRoutingTable);
-            connectionHandler.ProcessRequestAsync();
+            await connectionHandler.ProcessRequestAsync();
         }
     }
 }
