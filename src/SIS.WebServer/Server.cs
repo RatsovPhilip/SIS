@@ -18,7 +18,7 @@
 
         private bool isRunning;
 
-        public Server(int port,IServerRoutingTable serverRoutingTable)
+        public Server(int port, IServerRoutingTable serverRoutingTable)
         {
             this.port = port;
             this.tcpListener = new TcpListener(IPAddress.Parse(LocalhostIpAddress), port);
@@ -37,16 +37,16 @@
             {
                 Console.WriteLine("Waiting for client...");
 
-                var client = this.tcpListener.AcceptSocket();
+                var client = this.tcpListener.AcceptSocketAsync().GetAwaiter().GetResult();
 
-                this.Listen(client);
+                Task.Run(() => this.Listen(client));
             }
         }
 
-        public void Listen(Socket client)
+        public async Task Listen(Socket client)
         {
-            var connectionHandler = new ConnectionHandler(client,this.serverRoutingTable);
-            connectionHandler.ProcessRequest();
+            var connectionHandler = new ConnectionHandler(client, this.serverRoutingTable);
+            connectionHandler.ProcessRequestAsync();
         }
     }
 }
