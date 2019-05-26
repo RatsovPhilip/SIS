@@ -10,6 +10,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using SIS.HTTP.Extensions;
+    using SIS.HTTP.Cookies.Contracts;
+    using SIS.HTTP.Cookies;
 
     public class HttpRequest : IHttpRequest
     {
@@ -21,6 +23,7 @@
             this.FormData = new Dictionary<string, object>();
             this.QueryData = new Dictionary<string, object>();
             this.Headers = new HttpHeaderCollection();
+            this.Cookies = new HttpCookieCollection();
 
             this.ParseRequest(requestString);
         }
@@ -29,6 +32,8 @@
         public string Path { get; private set; }
 
         public string Url { get; private set; }
+
+        public IHttpCookieCollection Cookies { get; }
 
         public Dictionary<string, object> FormData { get; }
 
@@ -98,10 +103,21 @@
             .ToList()
             .ForEach(headerKeyValuePair => this.Headers.Addheader(new HttpHeader(headerKeyValuePair[0], headerKeyValuePair[1])));
         }
-        //private void ParseCookies()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void ParseCookies()
+        {
+            if (this.Headers.ContainsHeader(HttpHeader.Cookies))
+            {
+                string cookie = this.Headers.GetHeader(HttpHeader.Cookies).Value;
+                string[] values = cookie.Split(new[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var value in values)
+                {
+                    string[] keyValuePairs = value.Split('=');
+                    HttpCookie httpCookie = new HttpCookie(keyValuePairs[0], keyValuePairs[1],false);
+                    this.Cookies.AddCookie(httpCookie);
+                }
+            }
+        }
         private void ParseQueryParameters()
         {
             if (this.HasQueryString())

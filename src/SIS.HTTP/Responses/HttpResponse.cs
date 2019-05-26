@@ -2,6 +2,8 @@
 {
     using Contracts;
     using SIS.HTTP.Common;
+    using SIS.HTTP.Cookies;
+    using SIS.HTTP.Cookies.Contracts;
     using SIS.HTTP.Enums;
     using SIS.HTTP.Headers;
     using SIS.HTTP.Headers.Contracts;
@@ -9,10 +11,12 @@
 
     public class HttpResponse : IHttpResponse
     {
+
         public HttpResponse()
         {
             this.Headers = new HttpHeaderCollection();
             this.Content = new byte[0];
+            this.Cookies = new HttpCookieCollection();
         }
 
         public HttpResponse(HttpResponseStatusCode statusCode) : this()
@@ -24,12 +28,19 @@
 
         public IHttpHeaderCollection Headers { get; }
 
+        public IHttpCookieCollection Cookies { get; }
+
         public byte[] Content { get; set; }
 
         public void AddHeader(HttpHeader header)
         {
             CoreValidator.ThrowIfNull(header, nameof(header));
             this.Headers.Addheader(header);
+        }
+
+        public void AddCookie(HttpCookie cookie)
+        {
+            this.Cookies.AddCookie(cookie);
         }
 
         public byte[] GetBytes()
@@ -60,6 +71,11 @@
                 .Append(GlobalConstants.HttpNewLine)
                 .Append(this.Headers)
                 .Append(GlobalConstants.HttpNewLine);
+
+            if (this.Cookies.HasCookie())
+            {
+                result.Append($"Set-Cookie: {this.Cookies}").Append(GlobalConstants.HttpNewLine);
+            }
 
             result.Append(GlobalConstants.HttpNewLine);
 
