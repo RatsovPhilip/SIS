@@ -12,6 +12,7 @@
     using SIS.HTTP.Extensions;
     using SIS.HTTP.Cookies.Contracts;
     using SIS.HTTP.Cookies;
+    using SIS.HTTP.Sessions.Contracts;
 
     public class HttpRequest : IHttpRequest
     {
@@ -42,6 +43,7 @@
         public IHttpHeaderCollection Headers { get; }
 
         public HttpRequestMethod RequestMethod { get; private set; }
+        public IHttpSession Session { get; set; }
 
         private bool IsValidRequestLine(string[] requestLine)
         {
@@ -52,6 +54,7 @@
 
             return false;
         }
+
         private bool IsValidRequestQueryString(string queryString, string[] queryParameters)
         {
             CoreValidator.ThrowIfNullOrEmty(queryString, nameof(queryString));
@@ -69,6 +72,7 @@
                 }
             }
         }
+
         private void ParseRequestMethod(string[] requestLine)
         {
             string capitalizedMethod = StringExtensions.Capitalize(requestLine[0]);
@@ -84,14 +88,17 @@
 
             this.RequestMethod = method;
         }
+
         private void ParseRequestUrl(string[] requestLine)
         {
             this.Url = requestLine[1];
         }
+
         private void ParseRequestPath()
         {
             this.Path = this.Url.Split('?')[0];
         }
+
         private void ParseRequestHeaders(string[] requestLine)
         {
             //TODO : the headers are until the CLRF in the request line.
@@ -99,10 +106,11 @@
             //It should not reach the body.
             //Throw and exception if there is no "Host" header!
 
-            requestLine.Select(rl => rl.Split(new[] { ':', ' ' }, StringSplitOptions.RemoveEmptyEntries))
+            requestLine.Select(rl => rl.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries))
             .ToList()
             .ForEach(headerKeyValuePair => this.Headers.Addheader(new HttpHeader(headerKeyValuePair[0], headerKeyValuePair[1])));
         }
+
         private void ParseCookies()
         {
             if (this.Headers.ContainsHeader(HttpHeader.Cookies))
@@ -118,6 +126,7 @@
                 }
             }
         }
+
         private void ParseQueryParameters()
         {
             if (this.HasQueryString())
@@ -148,11 +157,13 @@
                     .ForEach(queryData => this.FormData.Add(queryData[0], queryData[1]));
             }
         }
+
         private void ParseRequestParameters(string formData)
         {
             this.ParseQueryParameters();
             this.ParseFormDataParameters(formData);
         }
+
         private void ParseRequest(string requestString)
         {
             string[] splitRequestContent = requestString
@@ -175,6 +186,5 @@
 
             this.ParseRequestParameters(splitRequestContent[splitRequestContent.Length - 1]);
         }
-
     }
 }

@@ -22,7 +22,7 @@ namespace SIS.HTTP.Sessions
             CoreValidator.ThrowIfNullOrEmty(name, nameof(name));
             CoreValidator.ThrowIfNull(parameter, nameof(parameter));
 
-            this.parameters.Add(name, parameter);
+            this.parameters[name] = parameter;
         }
 
         public void ClearParameter()

@@ -108,15 +108,15 @@
             {
                 var cookie = httpRequest.Cookies.GetCookie(HttpSessionStorage.SessionCookieKey);
                 sessionId = cookie.Value;
-                //httpRequest.Session = 
             }
             else
             {
                 sessionId = Guid.NewGuid().ToString();
-                //httpRequest.Session
             }
 
-            return sessionId;
+            httpRequest.Session = HttpSessionStorage.GetSession(sessionId);
+
+            return httpRequest.Session.Id;
         }
         private async Task PrepareResponse(IHttpResponse httpResponse)
         {
