@@ -38,9 +38,14 @@ namespace Demo.App
 
             IServerRoutingTable serverRoutingTable = new ServerRoutingTable();
 
-            serverRoutingTable.Add(HttpRequestMethod.Get,
-                "/",
+            serverRoutingTable.Add(HttpRequestMethod.Get, "/",
                 request => new HomeController().Home(request));
+
+            serverRoutingTable.Add(HttpRequestMethod.Get, "/login",
+                request => new HomeController().Login(request));
+
+            serverRoutingTable.Add(HttpRequestMethod.Get, "/logout",
+    request => new HomeController().Logout(request));
 
             Server server = new Server(8000, serverRoutingTable);
 
