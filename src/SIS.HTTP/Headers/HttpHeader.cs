@@ -5,6 +5,11 @@ namespace SIS.HTTP.Headers
     public class HttpHeader
     {
         public const string Cookies = "Cookie";
+
+        public const string ContentLenght = "Content-Lenght";
+
+        public const string ContentDisposition = "Content-Disposition";
+
         public HttpHeader(string key, string value)
         {
             CoreValidator.ThrowIfNullOrEmty(key, nameof(key));
