@@ -94,12 +94,18 @@
         {
             if (!this.serverRoutingTable.Contains(httpRequest.RequestMethod, httpRequest.Path))
             {
-                return new TextResult($"Route with method{httpRequest.RequestMethod} and path \"{httpRequest.Path}\" not found.", HttpResponseStatusCode.NotFound);
+                return this.ReturnIfResource(httpRequest.Path);
 
             }
 
             return this.serverRoutingTable.Get(httpRequest.RequestMethod, httpRequest.Path).Invoke(httpRequest);
         }
+
+        private IHttpResponse ReturnIfResource(IHttpRequest httpRequest)
+        {
+            Console.WriteLine();
+        }
+
         private string SetRequestSession(IHttpRequest httpRequest)
         {
             string sessionId = null;
