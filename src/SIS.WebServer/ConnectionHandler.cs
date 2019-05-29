@@ -12,6 +12,7 @@
     using SIS.HTTP.Sessions;
     using System;
     using System.Net.Sockets;
+    using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -103,7 +104,14 @@
 
         private IHttpResponse ReturnIfResource(IHttpRequest httpRequest)
         {
-            Console.WriteLine();
+            string folderPrefix = "../../../../";
+            string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            string resourceFolder = "Resources/";
+            string requestResource = httpRequest.Path;
+
+            string fullPathToResource = folderPrefix + assemblyLocation + resourceFolder + requestResource;
+
+            return 
         }
 
         private string SetRequestSession(IHttpRequest httpRequest)
