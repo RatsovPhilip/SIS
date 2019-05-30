@@ -21,18 +21,19 @@
             base.OnConfiguring(optionsBuilder);
         }
 
-        protected override OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
                 .HasKey(user => user.Id);
+
             modelBuilder.Entity<Track>()
                 .HasKey(track => track.Id);
+
             modelBuilder.Entity<Album>()
                 .HasKey(album => album.Id);
+
             modelBuilder.Entity<Album>()
                 .HasMany(album => album.Tracks);
-
-
 
         }
     }

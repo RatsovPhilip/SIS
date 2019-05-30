@@ -12,7 +12,7 @@ namespace IRunes.App.Controllers
         {
             if (this.IsLoggedIn(httpRequest))
             {
-                //TODO
+                return this.View("Home");
             }
 
             return this.View();
