@@ -121,7 +121,7 @@
                 foreach (var value in values)
                 {
                     string[] keyValuePairs = value.Split('=');
-                    HttpCookie httpCookie = new HttpCookie(keyValuePairs[0], keyValuePairs[1],false);
+                    HttpCookie httpCookie = new HttpCookie(keyValuePairs[0], keyValuePairs[1], false);
                     this.Cookies.AddCookie(httpCookie);
                 }
             }
@@ -147,14 +147,26 @@
 
         private void ParseFormDataParameters(string formData)
         {
-            if (!string.IsNullOrEmpty(formData))
+            if (string.IsNullOrEmpty(formData) == false)
             {
+                //TODO: Parse Multiple Parameters By Name
+                var paramsPairs = formData
+                   .Split('&')
+                   .Select(plainQueryParameter => plainQueryParameter.Split('='))
+                   .ToList();
 
-                formData
-                    .Split('&')
-                    .Select(queryParam => queryParam.Split('='))
-                    .ToList()
-                    .ForEach(queryData => this.FormData.Add(queryData[0], queryData[1]));
+                foreach (var paramPair in paramsPairs)
+                {
+                    string key = paramPair[0];
+                    string value = paramPair[1];
+
+                    if (this.FormData.ContainsKey(key) == false)
+                    {
+                        this.FormData.Add(key, new HashSet<string>());
+                    }
+
+                    ((ISet<string>)this.FormData[key]).Add(value);
+                }
             }
         }
 

@@ -11,6 +11,7 @@
     using SIS.HTTP.Cookies;
     using SIS.HTTP.Sessions;
     using System;
+    using System.IO;
     using System.Net.Sockets;
     using System.Reflection;
     using System.Text;
@@ -95,7 +96,7 @@
         {
             if (!this.serverRoutingTable.Contains(httpRequest.RequestMethod, httpRequest.Path))
             {
-                return this.ReturnIfResource(httpRequest.Path);
+                return this.ReturnIfResource(httpRequest);
 
             }
 
@@ -104,14 +105,22 @@
 
         private IHttpResponse ReturnIfResource(IHttpRequest httpRequest)
         {
-            string folderPrefix = "../../../../";
+            string folderPrefix = "/../../../../";
             string assemblyLocation = Assembly.GetExecutingAssembly().Location;
             string resourceFolder = "Resources/";
             string requestResource = httpRequest.Path;
 
-            string fullPathToResource = folderPrefix + assemblyLocation + resourceFolder + requestResource;
+            string fullPathToResource = assemblyLocation + folderPrefix + resourceFolder + requestResource;
 
-            return 
+            if (File.Exists(fullPathToResource))
+            {
+              byte[] content = File.ReadAllBytes(fullPathToResource);
+                return new InlineResourceResult(content, HttpResponseStatusCode.Found);
+            }
+            else
+            {
+                return new TextResult($"Route with method {httpRequest.RequestMethod} and path \"{httpRequest.Path}\" not found.", HttpResponseStatusCode.NotFound);
+            }
         }
 
         private string SetRequestSession(IHttpRequest httpRequest)
