@@ -12,6 +12,8 @@ namespace IRunes.App.Controllers
         {
             if (this.IsLoggedIn(httpRequest))
             {
+                this.ViewData["Username"] = httpRequest.Session.GetParameter("username");
+
                 return this.View("Home");
             }
 

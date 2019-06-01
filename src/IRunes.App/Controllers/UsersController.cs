@@ -23,10 +23,10 @@ namespace IRunes.App.Controllers
             {
                 string username = ((ISet<string>)httpRequest.FormData["username"]).FirstOrDefault();
                 string password = ((ISet<string>)httpRequest.FormData["password"]).FirstOrDefault();
-                string confirmPassword = ((ISet<string>)httpRequest.FormData["confirmPassword"]).FirstOrDefault();
-                string email = ((ISet<string>)httpRequest.FormData["email"]).FirstOrDefault();
+                //string confirmPassword = ((ISet<string>)httpRequest.FormData["confirmPassword"]).FirstOrDefault();
+               // string email = ((ISet<string>)httpRequest.FormData["email"]).FirstOrDefault();
 
-                User userFromDb = context.Users.FirstOrDefault(userA => (userA.Username == username || userA.Email == email) && userA.Password == this.HashPassword(password));
+                User userFromDb = context.Users.FirstOrDefault(userA => (userA.Username == username || userA.Email == username) && userA.Password == this.HashPassword(password));
 
                 if (userFromDb == null)
                 {

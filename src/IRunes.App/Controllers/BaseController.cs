@@ -42,9 +42,9 @@ namespace IRunes.App.Controllers
 
         protected void SignIn (IHttpRequest httpRequest,User user)
         {
-            httpRequest.Session.AddParameter("userid", user.Username);
+            httpRequest.Session.AddParameter("id", user.Id);
             httpRequest.Session.AddParameter("username", user.Username);
-            httpRequest.Session.AddParameter("email", user.Username);
+            httpRequest.Session.AddParameter("email", user.Email);
 
         }
 
