@@ -1,12 +1,13 @@
 ﻿using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.WebServer;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace IRunes.App.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         public IHttpResponse Index(IHttpRequest httpRequest)
         {

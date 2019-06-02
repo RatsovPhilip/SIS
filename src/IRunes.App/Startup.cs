@@ -19,6 +19,7 @@ namespace IRunes.App
                 context.Database.EnsureCreated();
             }
 
+            serverRoutingTable.Add(HttpRequestMethod.Get, "/Info/About", request => new InfoController().About(request));
 
             #region Home Routes
             serverRoutingTable.Add(HttpRequestMethod.Get, "/", request => new RedirectResult("/Home/Index"));

@@ -2,6 +2,7 @@
 using IRunes.Models;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.WebServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace IRunes.App.Controllers
 {
-    public class UsersController : BaseController
+    public class UsersController : Controller
     {
         public IHttpResponse Login(IHttpRequest httpRequest)
         {
@@ -24,7 +25,7 @@ namespace IRunes.App.Controllers
                 string username = ((ISet<string>)httpRequest.FormData["username"]).FirstOrDefault();
                 string password = ((ISet<string>)httpRequest.FormData["password"]).FirstOrDefault();
                 //string confirmPassword = ((ISet<string>)httpRequest.FormData["confirmPassword"]).FirstOrDefault();
-               // string email = ((ISet<string>)httpRequest.FormData["email"]).FirstOrDefault();
+                // string email = ((ISet<string>)httpRequest.FormData["email"]).FirstOrDefault();
 
                 User userFromDb = context.Users.FirstOrDefault(userA => (userA.Username == username || userA.Email == username) && userA.Password == this.HashPassword(password));
 
@@ -33,7 +34,7 @@ namespace IRunes.App.Controllers
                     return this.Redirect("/Users/Login");
                 }
 
-                this.SignIn(httpRequest, userFromDb);
+                this.SignIn(httpRequest, userFromDb.Id, userFromDb.Username, userFromDb.Email);
 
             }
             return this.Redirect("/");

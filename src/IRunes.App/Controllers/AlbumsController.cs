@@ -6,10 +6,11 @@ using IRunes.Models;
 using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.WebServer;
 
 namespace IRunes.App.Controllers
 {
-    public class AlbumsController : BaseController
+    public class AlbumsController : Controller
     {
         public IHttpResponse All(IHttpRequest httpRequest)
         {
