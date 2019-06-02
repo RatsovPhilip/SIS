@@ -1,12 +1,11 @@
-﻿using IRunes.App.Extensions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using IRunes.App.Extensions;
 using IRunes.Data;
 using IRunes.Models;
+using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Requests.Contracts;
 using SIS.HTTP.Responses.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace IRunes.App.Controllers
 {
@@ -30,8 +29,8 @@ namespace IRunes.App.Controllers
                 else
                 {
                     this.ViewData["Albums"] =
-                            string.Join("<br />",
-                            allAlbums.Select(album => album.ToHtmlAll()).ToList());
+                        string.Join(string.Empty,
+                        allAlbums.Select(album => album.ToHtmlAll()).ToList());
                 }
 
                 return this.View();
@@ -85,21 +84,18 @@ namespace IRunes.App.Controllers
 
             using (var context = new RunesDbContext())
             {
-                Album album = context.Albums.FirstOrDefault(a => a.Id == albumId);
+                Album albumFromDb = context.Albums
+                    .Include(album => album.Tracks)
+                    .SingleOrDefault(album => album.Id == albumId);
 
-                if (album == null)
+                if (albumFromDb == null)
                 {
                     return this.Redirect("/Albums/All");
                 }
 
-                this.ViewData["Album"] = album.ToHtmlDetails();
+                this.ViewData["Album"] = albumFromDb.ToHtmlDetails();
                 return this.View();
             }
-
-
-
-            return null;
         }
-
     }
 }

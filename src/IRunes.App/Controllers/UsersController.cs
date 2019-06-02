@@ -30,7 +30,7 @@ namespace IRunes.App.Controllers
 
                 if (userFromDb == null)
                 {
-                    return this.Redirect("/User/Login");
+                    return this.Redirect("/Users/Login");
                 }
 
                 this.SignIn(httpRequest, userFromDb);
