@@ -1,5 +1,4 @@
 ﻿using SIS.HTTP.Common;
-using SIS.HTTP.Sessions.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;

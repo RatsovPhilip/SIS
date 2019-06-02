@@ -3,16 +3,13 @@
     using Common;
     using Enums;
     using Headers;
-    using Headers.Contracts;
-    using Requests.Contracts;
     using Exceptions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using SIS.HTTP.Extensions;
-    using SIS.HTTP.Cookies.Contracts;
     using SIS.HTTP.Cookies;
-    using SIS.HTTP.Sessions.Contracts;
+    using SIS.HTTP.Sessions;
 
     public class HttpRequest : IHttpRequest
     {

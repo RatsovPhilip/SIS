@@ -1,8 +1,7 @@
-﻿namespace SIS.HTTP.Responses.Contracts
+﻿namespace SIS.HTTP.Responses
 {
     using Enums;
     using Headers;
-    using Headers.Contracts;
     using Cookies;
 
     public interface IHttpResponse

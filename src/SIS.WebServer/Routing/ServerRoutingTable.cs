@@ -1,10 +1,9 @@
 ﻿namespace SIS.WebServer.Routing
 {
     using HTTP.Enums;
-    using HTTP.Requests.Contracts;
-    using HTTP.Responses.Contracts;
-    using Routing.Contracts;
     using SIS.HTTP.Common;
+    using SIS.HTTP.Requests;
+    using SIS.HTTP.Responses;
     using System;
     using System.Collections.Generic;
 

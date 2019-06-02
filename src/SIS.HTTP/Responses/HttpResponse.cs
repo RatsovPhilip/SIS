@@ -1,12 +1,9 @@
 ﻿namespace SIS.HTTP.Responses
 {
-    using Contracts;
     using SIS.HTTP.Common;
     using SIS.HTTP.Cookies;
-    using SIS.HTTP.Cookies.Contracts;
     using SIS.HTTP.Enums;
     using SIS.HTTP.Headers;
-    using SIS.HTTP.Headers.Contracts;
     using System.Text;
 
     public class HttpResponse : IHttpResponse
