@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer;
+using SIS.WebServer.Atributes;
 
 namespace IRunes.App.Controllers
 {
@@ -48,6 +49,7 @@ namespace IRunes.App.Controllers
             return this.View();
         }
 
+        [HttpPost]
         public IHttpResponse CreateConfirm(IHttpRequest httpRequest)
         {
             if (!this.IsLoggedIn(httpRequest))

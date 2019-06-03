@@ -4,6 +4,7 @@ using IRunes.Models;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer;
+using SIS.WebServer.Atributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace IRunes.App.Controllers
             return this.View();
         }
 
+        [HttpPost]
         public IHttpResponse CreateConfirm(IHttpRequest httpRequest)
         {
             if (!this.IsLoggedIn(httpRequest))
