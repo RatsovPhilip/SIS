@@ -5,10 +5,8 @@ using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer;
 using SIS.WebServer.Atributes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace IRunes.App.Controllers
 {
@@ -26,7 +24,7 @@ namespace IRunes.App.Controllers
             return this.View();
         }
 
-        [HttpPost]
+        [HttpPost(ActionName = "Create")]
         public IHttpResponse CreateConfirm(IHttpRequest httpRequest)
         {
             if (!this.IsLoggedIn(httpRequest))

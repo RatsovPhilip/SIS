@@ -3,10 +3,8 @@ using SIS.HTTP.Responses;
 using SIS.WebServer.Atributes;
 using SIS.WebServer.Routing;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace SIS.WebServer
 {
@@ -40,20 +38,25 @@ namespace SIS.WebServer
                 foreach (var action in actions)
                 {
                     var url = $"/{controller.Name.Replace("Controller", string.Empty)}/{ action.Name}";
-                    var attribute = action.GetCustomAttributes.Where(x => x.AttributeType.IsSubclassOf(typeof(BaseHttpAttribute))).LastOrDefault();
-                    Console.WriteLine($"/{controller.Name.Replace("Controller", string.Empty)}/{action.Name}");
-                    Console.WriteLine(attribute?.AttributeType.Name);
+                    var attribute = action.GetCustomAttributes()
+                        .Where(x=>x.GetType().IsSubclassOf(typeof(BaseHttpAttribute)))
+                        .LastOrDefault() as BaseHttpAttribute;
                     var httpMethod = HttpRequestMethod.Get;
-                    if (attribute?.AttributeType == typeof(HttpPostAttribute))
+
+                    if (attribute != null)
                     {
-                        httpMethod = HttpRequestMethod.Post;
-                    }
-                    else if (attribute?.AttributeType == typeof(HttpDeleteAttribute))
-                    {
-                        httpMethod = HttpRequestMethod.Delete;
+                        httpMethod = attribute.Method;
                     }
 
-                    if(attribute?.NamedArguments.Where(x=>x.))
+                    if (attribute?.Url != null)
+                    {
+                        url = attribute.Url;
+                    }
+
+                    if (attribute?.ActionName != null)
+                    {
+                        url = $"/{controller.Name.Replace("Controller", string.Empty)}/{attribute?.ActionName}";
+                    }
 
                     serverRoutingTable.Add(httpMethod, url, request =>
                      {
