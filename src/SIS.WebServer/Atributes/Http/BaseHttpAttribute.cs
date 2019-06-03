@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SIS.WebServer.Atributes
+namespace SIS.WebServer.Atributes.Http
 {
     public abstract class BaseHttpAttribute : Attribute
     {
@@ -11,6 +11,6 @@ namespace SIS.WebServer.Atributes
 
         public string Url { get; set; }
 
-        public abstract HttpRequestMethod Method { get;}
+        public abstract HttpRequestMethod Method { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SIS.HTTP.Enums;
 using SIS.HTTP.Responses;
-using SIS.WebServer.Atributes;
+using SIS.WebServer.Atributes.Action;
+using SIS.WebServer.Atributes.Http;
 using SIS.WebServer.Routing;
 using System;
 using System.Linq;
@@ -33,7 +34,8 @@ namespace SIS.WebServer
                 var actions = controller.GetMethods(BindingFlags.DeclaredOnly
                     | BindingFlags.Public
                     | BindingFlags.Instance)
-                     .Where(x => !x.IsSpecialName);
+                     .Where(x => !x.IsSpecialName)
+                .Where(x => x.GetCustomAttributes().All(a => a.GetType() != typeof(NonActionAttribute)));
 
                 foreach (var action in actions)
                 {

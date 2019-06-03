@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer;
-using SIS.WebServer.Atributes;
+using SIS.WebServer.Atributes.Http;
 
 namespace IRunes.App.Controllers
 {

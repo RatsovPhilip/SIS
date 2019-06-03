@@ -1,7 +1,7 @@
 ﻿using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer;
-using SIS.WebServer.Atributes;
+using SIS.WebServer.Atributes.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;

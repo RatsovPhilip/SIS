@@ -1,7 +1,6 @@
 ﻿using SIS.HTTP.Enums;
-using SIS.WebServer.Atributes;
 
-namespace SIS.WebServer
+namespace SIS.WebServer.Atributes.Http
 {
     internal class HttpDeleteAttribute : BaseHttpAttribute
     {

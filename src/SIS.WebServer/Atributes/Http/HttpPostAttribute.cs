@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SIS.WebServer.Atributes
+namespace SIS.WebServer.Atributes.Http
 {
     public class HttpPostAttribute : BaseHttpAttribute
     {
