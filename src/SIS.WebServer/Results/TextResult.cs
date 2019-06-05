@@ -5,7 +5,7 @@
     using HTTP.Headers;
     using System.Text;
 
-    public class TextResult : HttpResponse
+    public class TextResult : ActionResult
     {
         public TextResult(string content, HttpResponseStatusCode responseStatusCode,
             string contentType = "text/plain; charset=utd-8") : base(responseStatusCode)

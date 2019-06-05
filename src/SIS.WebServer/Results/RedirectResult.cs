@@ -4,7 +4,7 @@
     using SIS.HTTP.Enums;
     using SIS.HTTP.Headers;
 
-    public class RedirectResult : HttpResponse
+    public class RedirectResult : ActionResult
     {
         public RedirectResult(string location) : base(HttpResponseStatusCode.SeeOther)
         {

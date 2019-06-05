@@ -45,12 +45,12 @@ namespace SIS.WebServer
 
         }
 
-        protected IHttpResponse View([CallerMemberName] string view = null)
+        protected ActionResult View([CallerMemberName] string view = null)
         {
             string controllerName = GetType().Name.Replace("Controller", string.Empty);
             string viewName = view;
 
-            string viewContent = File.ReadAllText("Views/" + controllerName + "/" + viewName + ".html");
+            string viewContent = System.IO.File.ReadAllText("Views/" + controllerName + "/" + viewName + ".html");
 
             viewContent = ParseTemplate(viewContent);
 
@@ -59,9 +59,25 @@ namespace SIS.WebServer
             return htmlResult;
         }
 
-        protected IHttpResponse Redirect(string url)
+        protected ActionResult Redirect(string url)
         {
             return new RedirectResult(url);
+        }
+
+        protected ActionResult Xml(object param)
+        {
+            return null;
+        }
+
+        protected ActionResult Json(object param)
+        {
+            return null;
+        }
+
+        protected ActionResult File()
+        {
+            return null;
+
         }
     }
 }

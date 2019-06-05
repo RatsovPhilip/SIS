@@ -6,7 +6,7 @@ namespace SIS.WebServer.Results
     using SIS.HTTP.Headers;
     using System.Text;
 
-    public class HtmlResult : HttpResponse
+    public class HtmlResult : ActionResult
     {
         public HtmlResult(string content,HttpResponseStatusCode responseStatusCode)
             : base(responseStatusCode)

@@ -1,13 +1,9 @@
 ﻿using SIS.HTTP.Enums;
 using SIS.HTTP.Headers;
-using SIS.HTTP.Responses;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SIS.WebServer.Results
 {
-    class InlineResourceResult : HttpResponse
+    class InlineResourceResult : ActionResult
     {
         public InlineResourceResult(byte[] content,HttpResponseStatusCode responseStatusCode) : base(responseStatusCode)
         {
