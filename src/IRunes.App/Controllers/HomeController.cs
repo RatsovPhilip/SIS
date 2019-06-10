@@ -2,6 +2,7 @@
 using SIS.HTTP.Responses;
 using SIS.WebServer;
 using SIS.WebServer.Atributes.Http;
+using SIS.WebServer.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,21 +12,21 @@ namespace IRunes.App.Controllers
     public class HomeController : Controller
     {
         [HttpGet(Url = "/")]
-        public IHttpResponse IndexSlash(IHttpRequest httpRequest)
+        public ActionResult IndexSlash()
         {
-            return Index(httpRequest);
+            return Index();
         }
 
-        public IHttpResponse Index(IHttpRequest httpRequest)
+        public ActionResult Index()
         {
-            if (this.IsLoggedIn(httpRequest))
-            {
-                this.ViewData["Username"] = httpRequest.Session.GetParameter("username");
+            if (this.IsLoggedIn())
+            { 
+                this.ViewData["Username"] = this.User.UserName;
 
                 return this.View("Home");
             }
 
-            return this.View();
+            return this.View(); //10-0
         }
     }
 }

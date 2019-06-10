@@ -1,12 +1,10 @@
 ﻿using SIS.HTTP.Enums;
 using SIS.HTTP.Requests;
-using SIS.HTTP.Responses;
 using SIS.WebServer.Extensions;
+using SIS.WebServer.Identity;
 using SIS.WebServer.Results;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
 
 namespace SIS.WebServer
 {
@@ -19,6 +17,10 @@ namespace SIS.WebServer
             ViewData = new Dictionary<string, object>();
         }
 
+        protected Principal User => (Principal)this.Request.Session.GetParameter("principal");
+
+        protected IHttpRequest Request { get; set; }
+
         private string ParseTemplate(string viewContent)
         {
             foreach (var param in ViewData)
@@ -29,21 +31,24 @@ namespace SIS.WebServer
             return viewContent;
         }
 
-        protected bool IsLoggedIn(IHttpRequest httpRequest)
+        protected bool IsLoggedIn()
         {
-            return httpRequest.Session.ContainsParameter("username");
+            return this.Request.Session.ContainsParameter("username");
         }
-        protected void SignOut(IHttpRequest httpRequest)
+        protected void SignOut()
         {
-            httpRequest.Session.ClearParameter();
+           this.Request.Session.ClearParameter();
 
         }
 
-        protected void SignIn(IHttpRequest httpRequest, string id, string username, string email)
+        protected void SignIn(string id, string username, string email)
         {
-            httpRequest.Session.AddParameter("id", id);
-            httpRequest.Session.AddParameter("username", username);
-            httpRequest.Session.AddParameter("email", email);
+            this.Request.Session.AddParameter("principal", new Principal
+            {
+                Id = id,
+                UserName = username, 
+                Email = email
+            });
 
         }
 
@@ -76,10 +81,15 @@ namespace SIS.WebServer
             return new JsonResult(param.ToJson());
         }
 
-        protected ActionResult File()
+        protected ActionResult File(byte[] fileContent)
         {
-            return null;
+            return new FileResult(fileContent);
 
+        }
+
+        protected ActionResult NotFound(string message = "")
+        {
+            return new NotFoundResult(message);
         }
     }
 }
