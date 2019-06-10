@@ -1,10 +1,12 @@
 ﻿using SIS.HTTP.Enums;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.WebServer.Extensions;
 using SIS.WebServer.Results;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace SIS.WebServer
 {
@@ -66,12 +68,12 @@ namespace SIS.WebServer
 
         protected ActionResult Xml(object param)
         {
-            return null;
+            return new XmlResult(param.ToXml());
         }
 
         protected ActionResult Json(object param)
         {
-            return null;
+            return new JsonResult(param.ToJson());
         }
 
         protected ActionResult File()
